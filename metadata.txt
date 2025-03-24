@@ -1,0 +1,17 @@
+[general]
+name=AzimuthTool
+description=A powerful QGIS plugin for generating vector line layers from azimuths or quadrant bearings and distances, starting from a user-defined point.
+about=AzimuthTool simplifies the creation of line geometries in QGIS by allowing users to input an initial coordinate, followed by angles (azimuths like "90-30-15.50" or bearings like "45-15-30-NE") and distances (e.g., "100.25"). It supports flexible workflows with features like snapping to existing layers, importing/exporting data via text files, and outputting results as shapefiles, geopackages, or temporary layers.
+version=1.1
+qgisMinimumVersion=3.0
+author=João Ubaldo
+email=joao@brafor.com.br
+category=Vector
+icon=icon.png
+experimental=False
+deprecated=False
+tags=azimuth, bearing, vector, geometry, line, coordinate, distance, mapping, surveying, cartography
+license=MIT
+homepage=https://github.com/joaobrafor/AzimuthTool
+tracker=https://github.com/joaobrafor/AzimuthTool/issues
+repository=https://github.com/joaobrafor/AzimuthTool

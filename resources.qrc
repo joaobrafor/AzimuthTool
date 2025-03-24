@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/AzimuthTool">
+        <file>icon.png</file>
+    </qresource>
+</RCC>
