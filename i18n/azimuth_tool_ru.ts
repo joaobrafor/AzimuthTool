@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TS version="2.1" language="ru">
   <context>
+    <name>ImportOptionsDialog</name>
+    <message>
+      <source>Import Options</source>
+      <translation>Параметры импорта</translation>
+    </message>
+    <message>
+      <source>Select angle type:</source>
+      <translation>Выберите тип угла:</translation>
+    </message>
+    <message>
+      <source>Azimuth</source>
+      <translation>Азимут (Azimuth)</translation>
+    </message>
+    <message>
+      <source>Bearing</source>
+      <translation>Курс (Bearing)</translation>
+    </message>
+    <message>
+      <source>Select angle precision (0-10):</source>
+      <translation>Выберите точность угла (0-10):</translation>
+    </message>
+    <message>
+      <source>Select distance precision (0-10):</source>
+      <translation>Выберите точность расстояния (0-10):</translation>
+    </message>
+  </context>
+
+  <context>
     <name>AzimuthToolDialog</name>
     <message>
       <source>Azimuth Tool</source>
-      <translation>Инструмент азимута</translation>
+      <translation>Инструмент Азимута</translation>
     </message>
     <message>
       <source>Output Layer:</source>
@@ -15,20 +43,16 @@
       <translation>Обзор</translation>
     </message>
     <message>
-      <source>Temporary Layer</source>
-      <translation>Временный слой</translation>
-    </message>
-    <message>
       <source>Initial Coordinate:</source>
-      <translation>Начальная координата:</translation>
+      <translation>Начальные координаты:</translation>
     </message>
     <message>
       <source>Select on Canvas</source>
       <translation>Выбрать на карте</translation>
     </message>
     <message>
-      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacency:</source>
-      <translation>Список вершин, азимутов/направлений, расстояний и смежности:</translation>
+      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacencies:</source>
+      <translation>Список вершин, азимутов/курсов, расстояний и смежностей:</translation>
     </message>
     <message>
       <source>Vertex</source>
@@ -47,6 +71,22 @@
       <translation>Смежность</translation>
     </message>
     <message>
+      <source>-</source>
+      <translation>-</translation>
+    </message>
+    <message>
+      <source>+</source>
+      <translation>+</translation>
+    </message>
+    <message>
+      <source>↑</source>
+      <translation>↑</translation>
+    </message>
+    <message>
+      <source>↓</source>
+      <translation>↓</translation>
+    </message>
+    <message>
       <source>Import from .txt</source>
       <translation>Импорт из .txt</translation>
     </message>
@@ -63,6 +103,10 @@
       <translation>Обработать</translation>
     </message>
     <message>
+      <source>Temporary Layer</source>
+      <translation>Временный слой</translation>
+    </message>
+    <message>
       <source>Select output file</source>
       <translation>Выберите выходной файл</translation>
     </message>
@@ -76,7 +120,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Вы можете включить привязку, если выберите ровно один векторный слой перед нажатием «Выбрать на карте».</translation>
+      <translation>Вы можете включить привязку, если выберете ровно один векторный слой перед нажатием &apos;Выбрать на карте&apos;.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -87,52 +131,44 @@
       <translation>Выберите векторный слой для привязки.</translation>
     </message>
     <message>
-      <source>Import from TXT</source>
-      <translation>Импорт из TXT</translation>
+      <source>In this plugin, the Angle field accepts values in the following format: </source>
+      <translation>В этом плагине поле Угол принимает значения в следующем формате:</translation>
     </message>
     <message>
-      <source>Text Files (*.txt)</source>
-      <translation>Текстовые файлы (*.txt)</translation>
+      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
+      <translation>АЗИМУТ: например 80-00-00 или похожий формат (без десятичных, если не указано). Примеры:</translation>
     </message>
     <message>
-      <source>Initial Point</source>
-      <translation>Начальная точка</translation>
+      <source>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </source>
+      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00.</translation>
     </message>
     <message>
-      <source>Invalid degrees.</source>
-      <translation>Недопустимые градусы.</translation>
+      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
+      <translation>КУРС (Bearing): например 80-00-00-NE (с направлениями NE, NW, SE, SW). Примеры:</translation>
     </message>
     <message>
-      <source>Invalid direction.</source>
-      <translation>Недопустимое направление.</translation>
+      <source>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </source>
+      <translation>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE |</translation>
     </message>
     <message>
-      <source>Invalid degrees or minutes.</source>
-      <translation>Недопустимые градусы или минуты.</translation>
+      <source>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </source>
+      <translation>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE.</translation>
     </message>
     <message>
-      <source>Invalid seconds.</source>
-      <translation>Недопустимые секунды.</translation>
+      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
+      <translation>Направления: могут быть в верхнем или нижнем регистре; лишний текст не принимается.</translation>
     </message>
     <message>
-      <source>Invalid number of parts for bearing.</source>
-      <translation>Недопустимое число частей для направления.</translation>
+      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
+      <translation>Десятичные: и Угол, и Расстояние принимают запятые или точки в качестве разделителей.</translation>
     </message>
     <message>
-      <source>Export to TXT</source>
-      <translation>Экспорт в TXT</translation>
+      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
+      <translation>Примечание: поля Вершина и Смежность являются необязательными и могут быть оставлены пустыми.</translation>
     </message>
     <message>
-      <source>Select import format:</source>
-      <translation>Выберите формат импорта:</translation>
-    </message>
-    <message>
-      <source>Azimuth</source>
-      <translation>Азимут</translation>
-    </message>
-    <message>
-      <source>Bearing</source>
-      <translation>Направление</translation>
+      <source>Information</source>
+      <translation>Информация</translation>
     </message>
     <message>
       <source>No layer selected.</source>
@@ -144,95 +180,75 @@
     </message>
     <message>
       <source>Initial coordinate is required.</source>
-      <translation>Необходима начальная координата.</translation>
+      <translation>Требуются начальные координаты.</translation>
     </message>
     <message>
       <source>Invalid format for initial coordinate.</source>
-      <translation>Недопустимый формат начальной координаты.</translation>
+      <translation>Неправильный формат начальных координат.</translation>
     </message>
     <message>
       <source>Invalid data in row %1.</source>
-      <translation>Недопустимые данные в строке %1.</translation>
+      <translation>Неверные данные в строке %1.</translation>
     </message>
     <message>
       <source>No valid azimuth and distance provided.</source>
       <translation>Не указаны корректные азимут и расстояние.</translation>
     </message>
     <message>
-      <source>ID</source>
-      <translation>ID</translation>
-    </message>
-    <message>
-      <source>Distance</source>
-      <translation>Расстояние</translation>
-    </message>
-    <message>
-      <source>Error creating file: %1</source>
-      <translation>Ошибка при создании файла: %1</translation>
-    </message>
-    <message>
       <source>Output Lines</source>
       <translation>Выходные линии</translation>
     </message>
     <message>
-      <source>File created at %1</source>
-      <translation>Файл создан в: %1</translation>
+      <source>Error creating file: {writer.errorMessage()}</source>
+      <translation>Ошибка при создании файла: {writer.errorMessage()}</translation>
+    </message>
+    <message>
+      <source>File created at {shapefile_path}</source>
+      <translation>Файл создан по пути: {shapefile_path}</translation>
     </message>
     <message>
       <source>Temporary layer created.</source>
       <translation>Создан временный слой.</translation>
     </message>
     <message>
-      <source>In this plugin, the Angle field accepts values in the following format: </source>
-      <translation>В этом плагине поле «Угол» принимает значения в следующем формате: </translation>
+      <source>Invalid degrees.</source>
+      <translation>Неверные градусы.</translation>
     </message>
     <message>
-      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
-      <translation>АЗИМУТ: например, 80-00-00 или похоже (без десятичных знаков, если не указано). Примеры: </translation>
+      <source>Invalid direction.</source>
+      <translation>Неверное направление.</translation>
     </message>
     <message>
-      <source>80 -> 80-00-00 | 80-00 -> 80-00-00 | 80-00-00.00 -> 80-00-00.00. </source>
-      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </translation>
+      <source>Invalid degrees or minutes.</source>
+      <translation>Неверные градусы или минуты.</translation>
     </message>
     <message>
-      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
-      <translation>НАПРАВЛЕНИЕ: например, 80-00-00-NE (c направлениями NE, NW, SE, SW). Примеры: </translation>
+      <source>Invalid seconds.</source>
+      <translation>Неверные секунды.</translation>
     </message>
     <message>
-      <source> 80-NE -> 80-00-00-NE | 80-00-NE -> 80-00-00-NE | 80-00-00.00-NE -> 80-00-00.00-NE | </source>
-      <translation> 80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </translation>
+      <source>Invalid number of parts for bearing.</source>
+      <translation>Неверное количество частей для курса (bearing).</translation>
     </message>
     <message>
-      <source> 80-45-NE -> 80-45-00-NE | 80-45-38.00-NE -> 80-45-38.00-NE. </source>
-      <translation> 80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </translation>
+      <source>Invalid bearing format.</source>
+      <translation>Неверный формат bearing.</translation>
     </message>
     <message>
-      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
-      <translation>Направления: могут быть в верхнем или нижнем регистре; дополнительный текст не допускается. </translation>
+      <source>Invalid rumo format</source>
+      <translation>Неверный формат rumo.</translation>
     </message>
     <message>
-      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
-      <translation>Десятичные знаки: и «Угол», и «Расстояние» принимают запятые или точки в качестве разделителей. </translation>
+      <source>Invalid numeric values in angle</source>
+      <translation>Неверные числовые значения в угле.</translation>
     </message>
     <message>
-      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
-      <translation>Примечание: поля «Вершина» и «Смежность» не обязательны и могут быть оставлены пустыми.</translation>
+      <source>Invalid azimute format</source>
+      <translation>Неверный формат azimute.</translation>
     </message>
     <message>
-      <source>Error in bearing format: </source>
-      <translation>Ошибка в формате направления: </translation>
-    </message>
-    <message>
-      <source>&amp;Azimuth Tool</source>
-      <translation>Инструмент &amp;азимута</translation>
-    </message>
-    <message>
-      <source>Error in row %1: %2</source>
-      <translation>Ошибка в строке %1: %2</translation>
-    </message>
-    <message>
-      <source>Information</source>
-      <translation>Информация</translation>
+      <source>Distance</source>
+      <translation>Расстояние</translation>
     </message>
   </context>
 </TS>

@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TS version="2.1" language="de">
   <context>
+    <name>ImportOptionsDialog</name>
+    <message>
+      <source>Import Options</source>
+      <translation>Importoptionen</translation>
+    </message>
+    <message>
+      <source>Select angle type:</source>
+      <translation>Wählen Sie den Winkeltyp:</translation>
+    </message>
+    <message>
+      <source>Azimuth</source>
+      <translation>Azimut (Azimuth)</translation>
+    </message>
+    <message>
+      <source>Bearing</source>
+      <translation>Peilung (Bearing)</translation>
+    </message>
+    <message>
+      <source>Select angle precision (0-10):</source>
+      <translation>Wählen Sie die Winkelgenauigkeit (0-10):</translation>
+    </message>
+    <message>
+      <source>Select distance precision (0-10):</source>
+      <translation>Wählen Sie die Distanzgenauigkeit (0-10):</translation>
+    </message>
+  </context>
+
+  <context>
     <name>AzimuthToolDialog</name>
     <message>
       <source>Azimuth Tool</source>
-      <translation>Azimut-Werkzeug</translation>
+      <translation>Azimuth-Werkzeug</translation>
     </message>
     <message>
       <source>Output Layer:</source>
@@ -15,10 +43,6 @@
       <translation>Durchsuchen</translation>
     </message>
     <message>
-      <source>Temporary Layer</source>
-      <translation>Temporäre Ebene</translation>
-    </message>
-    <message>
       <source>Initial Coordinate:</source>
       <translation>Anfangskoordinate:</translation>
     </message>
@@ -27,8 +51,8 @@
       <translation>Auf der Karte auswählen</translation>
     </message>
     <message>
-      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacency:</source>
-      <translation>Liste von Scheitelpunkten, Azimuten/Richtungen, Distanzen und Adjazenzen:</translation>
+      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacencies:</source>
+      <translation>Liste von Vertices, Azimuten/Peilungen, Entfernungen und Nachbarschaften:</translation>
     </message>
     <message>
       <source>Vertex</source>
@@ -40,11 +64,27 @@
     </message>
     <message>
       <source>Distance (m)</source>
-      <translation>Distanz (m)</translation>
+      <translation>Entfernung (m)</translation>
     </message>
     <message>
       <source>Adjacency</source>
       <translation>Nachbarschaft</translation>
+    </message>
+    <message>
+      <source>-</source>
+      <translation>-</translation>
+    </message>
+    <message>
+      <source>+</source>
+      <translation>+</translation>
+    </message>
+    <message>
+      <source>↑</source>
+      <translation>↑</translation>
+    </message>
+    <message>
+      <source>↓</source>
+      <translation>↓</translation>
     </message>
     <message>
       <source>Import from .txt</source>
@@ -56,11 +96,15 @@
     </message>
     <message>
       <source>Import from Line/Polygon</source>
-      <translation>Aus Linie/Polygon importieren</translation>
+      <translation>Von Linie/Polygon importieren</translation>
     </message>
     <message>
       <source>Process</source>
-      <translation>Prozess</translation>
+      <translation>Verarbeiten</translation>
+    </message>
+    <message>
+      <source>Temporary Layer</source>
+      <translation>Temporäre Ebene</translation>
     </message>
     <message>
       <source>Select output file</source>
@@ -76,7 +120,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Sie können Snapping aktivieren, wenn Sie genau eine Vektorebene auswählen, bevor Sie „Auf der Karte auswählen“ klicken.</translation>
+      <translation>Sie können Snapping aktivieren, wenn Sie genau eine Vektorebene auswählen, bevor Sie &apos;Auf der Karte auswählen&apos; anklicken.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -87,52 +131,44 @@
       <translation>Wählen Sie eine Vektorebene für das Snapping aus.</translation>
     </message>
     <message>
-      <source>Import from TXT</source>
-      <translation>Aus TXT importieren</translation>
+      <source>In this plugin, the Angle field accepts values in the following format: </source>
+      <translation>In diesem Plugin akzeptiert das Winkel-Feld Werte im folgenden Format:</translation>
     </message>
     <message>
-      <source>Text Files (*.txt)</source>
-      <translation>Textdateien (*.txt)</translation>
+      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
+      <translation>AZIMUTH: z.B. 80-00-00 oder ähnlich (ohne Dezimalstellen, sofern nicht angegeben). Beispiele:</translation>
     </message>
     <message>
-      <source>Initial Point</source>
-      <translation>Anfangspunkt</translation>
+      <source>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </source>
+      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00.</translation>
     </message>
     <message>
-      <source>Invalid degrees.</source>
-      <translation>Ungültige Gradzahl.</translation>
+      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
+      <translation>PEILUNG: z.B. 80-00-00-NE (mit Richtungen NE, NW, SE, SW). Beispiele:</translation>
     </message>
     <message>
-      <source>Invalid direction.</source>
-      <translation>Ungültige Richtung.</translation>
+      <source>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </source>
+      <translation>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE |</translation>
     </message>
     <message>
-      <source>Invalid degrees or minutes.</source>
-      <translation>Ungültige Grad- oder Minutenangabe.</translation>
+      <source>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </source>
+      <translation>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE.</translation>
     </message>
     <message>
-      <source>Invalid seconds.</source>
-      <translation>Ungültige Sekundenangabe.</translation>
+      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
+      <translation>Richtungen: können groß- oder kleingeschrieben sein; zusätzlicher Text wird nicht akzeptiert.</translation>
     </message>
     <message>
-      <source>Invalid number of parts for bearing.</source>
-      <translation>Ungültige Anzahl von Teilen für die Richtung.</translation>
+      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
+      <translation>Dezimalstellen: Sowohl Winkel als auch Entfernung akzeptieren Kommas oder Punkte als Trennzeichen.</translation>
     </message>
     <message>
-      <source>Export to TXT</source>
-      <translation>In TXT exportieren</translation>
+      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
+      <translation>Hinweis: Vertex- und Adjacency-Felder sind optional und können leer gelassen werden.</translation>
     </message>
     <message>
-      <source>Select import format:</source>
-      <translation>Importformat auswählen:</translation>
-    </message>
-    <message>
-      <source>Azimuth</source>
-      <translation>Azimut</translation>
-    </message>
-    <message>
-      <source>Bearing</source>
-      <translation>Richtung</translation>
+      <source>Information</source>
+      <translation>Information</translation>
     </message>
     <message>
       <source>No layer selected.</source>
@@ -156,83 +192,63 @@
     </message>
     <message>
       <source>No valid azimuth and distance provided.</source>
-      <translation>Kein gültiger Azimut und keine gültige Distanz angegeben.</translation>
-    </message>
-    <message>
-      <source>ID</source>
-      <translation>ID</translation>
-    </message>
-    <message>
-      <source>Distance</source>
-      <translation>Distanz</translation>
-    </message>
-    <message>
-      <source>Error creating file: %1</source>
-      <translation>Fehler beim Erstellen der Datei: %1</translation>
+      <translation>Kein gültiger Azimut und keine gültige Entfernung angegeben.</translation>
     </message>
     <message>
       <source>Output Lines</source>
       <translation>Ausgabelinien</translation>
     </message>
     <message>
-      <source>File created at %1</source>
-      <translation>Datei erstellt unter %1</translation>
+      <source>Error creating file: {writer.errorMessage()}</source>
+      <translation>Fehler beim Erstellen der Datei: {writer.errorMessage()}</translation>
+    </message>
+    <message>
+      <source>File created at {shapefile_path}</source>
+      <translation>Datei erstellt unter {shapefile_path}</translation>
     </message>
     <message>
       <source>Temporary layer created.</source>
       <translation>Temporäre Ebene erstellt.</translation>
     </message>
     <message>
-      <source>In this plugin, the Angle field accepts values in the following format: </source>
-      <translation>In diesem Plugin akzeptiert das Winkel-Feld Werte im folgenden Format: </translation>
+      <source>Invalid degrees.</source>
+      <translation>Ungültige Gradangabe.</translation>
     </message>
     <message>
-      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
-      <translation>AZIMUT: z.B. 80-00-00 oder ähnlich (ohne Dezimalstellen, sofern nicht angegeben). Beispiele: </translation>
+      <source>Invalid direction.</source>
+      <translation>Ungültige Richtung.</translation>
     </message>
     <message>
-      <source>80 -> 80-00-00 | 80-00 -> 80-00-00 | 80-00-00.00 -> 80-00-00.00. </source>
-      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </translation>
+      <source>Invalid degrees or minutes.</source>
+      <translation>Ungültige Grade oder Minuten.</translation>
     </message>
     <message>
-      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
-      <translation>RICHTUNG: z.B. 80-00-00-NE (mit Richtungen NE, NW, SE, SW). Beispiele: </translation>
+      <source>Invalid seconds.</source>
+      <translation>Ungültige Sekunden.</translation>
     </message>
     <message>
-      <source> 80-NE -> 80-00-00-NE | 80-00-NE -> 80-00-00-NE | 80-00-00.00-NE -> 80-00-00.00-NE | </source>
-      <translation> 80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </translation>
+      <source>Invalid number of parts for bearing.</source>
+      <translation>Ungültige Anzahl von Teilen für die Peilung.</translation>
     </message>
     <message>
-      <source> 80-45-NE -> 80-45-00-NE | 80-45-38.00-NE -> 80-45-38.00-NE. </source>
-      <translation> 80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </translation>
+      <source>Invalid bearing format.</source>
+      <translation>Ungültiges Peilungsformat.</translation>
     </message>
     <message>
-      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
-      <translation>Richtungen: können in Groß- oder Kleinschreibung sein; zusätzlicher Text ist nicht zulässig. </translation>
+      <source>Invalid rumo format</source>
+      <translation>Ungültiges rumo-Format.</translation>
     </message>
     <message>
-      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
-      <translation>Dezimalstellen: Sowohl Winkel als auch Distanz akzeptieren Kommas oder Punkte als Trennzeichen. </translation>
+      <source>Invalid numeric values in angle</source>
+      <translation>Ungültige Zahlenwerte im Winkel.</translation>
     </message>
     <message>
-      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
-      <translation>Hinweis: Die Felder Vertex und Nachbarschaft sind optional und können leer gelassen werden.</translation>
+      <source>Invalid azimute format</source>
+      <translation>Ungültiges azimute-Format.</translation>
     </message>
     <message>
-      <source>Error in bearing format: </source>
-      <translation>Fehler im Richtungsformat: </translation>
-    </message>
-    <message>
-      <source>&amp;Azimuth Tool</source>
-      <translation>&amp;Azimut-Werkzeug</translation>
-    </message>
-    <message>
-      <source>Error in row %1: %2</source>
-      <translation>Fehler in Zeile %1: %2</translation>
-    </message>
-    <message>
-      <source>Information</source>
-      <translation>Information</translation>
+      <source>Distance</source>
+      <translation>Entfernung</translation>
     </message>
   </context>
 </TS>

@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TS version="2.1" language="es">
   <context>
+    <name>ImportOptionsDialog</name>
+    <message>
+      <source>Import Options</source>
+      <translation>Opciones de Importación</translation>
+    </message>
+    <message>
+      <source>Select angle type:</source>
+      <translation>Seleccione el tipo de ángulo:</translation>
+    </message>
+    <message>
+      <source>Azimuth</source>
+      <translation>Acimut (Azimuth)</translation>
+    </message>
+    <message>
+      <source>Bearing</source>
+      <translation>Rumbo (Bearing)</translation>
+    </message>
+    <message>
+      <source>Select angle precision (0-10):</source>
+      <translation>Seleccione la precisión del ángulo (0-10):</translation>
+    </message>
+    <message>
+      <source>Select distance precision (0-10):</source>
+      <translation>Seleccione la precisión de la distancia (0-10):</translation>
+    </message>
+  </context>
+
+  <context>
     <name>AzimuthToolDialog</name>
     <message>
       <source>Azimuth Tool</source>
@@ -8,27 +36,23 @@
     </message>
     <message>
       <source>Output Layer:</source>
-      <translation>Capa de salida:</translation>
+      <translation>Capa de Salida:</translation>
     </message>
     <message>
       <source>Browse</source>
       <translation>Examinar</translation>
     </message>
     <message>
-      <source>Temporary Layer</source>
-      <translation>Capa temporal</translation>
-    </message>
-    <message>
       <source>Initial Coordinate:</source>
-      <translation>Coordenada inicial:</translation>
+      <translation>Coordenada Inicial:</translation>
     </message>
     <message>
       <source>Select on Canvas</source>
-      <translation>Seleccionar en el lienzo</translation>
+      <translation>Seleccionar en el Mapa</translation>
     </message>
     <message>
-      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacency:</source>
-      <translation>Lista de vértices, acimuts/rumbo, distancias y adyacencia:</translation>
+      <source>List of Vertices, Azimuths/Bearings, Distances, and Adjacencies:</source>
+      <translation>Lista de Vértices, Acimuts/Rumbos, Distancias y Adyacencias:</translation>
     </message>
     <message>
       <source>Vertex</source>
@@ -47,6 +71,22 @@
       <translation>Adyacencia</translation>
     </message>
     <message>
+      <source>-</source>
+      <translation>-</translation>
+    </message>
+    <message>
+      <source>+</source>
+      <translation>+</translation>
+    </message>
+    <message>
+      <source>↑</source>
+      <translation>↑</translation>
+    </message>
+    <message>
+      <source>↓</source>
+      <translation>↓</translation>
+    </message>
+    <message>
       <source>Import from .txt</source>
       <translation>Importar desde .txt</translation>
     </message>
@@ -63,8 +103,12 @@
       <translation>Procesar</translation>
     </message>
     <message>
+      <source>Temporary Layer</source>
+      <translation>Capa Temporal</translation>
+    </message>
+    <message>
       <source>Select output file</source>
-      <translation>Seleccionar archivo de salida</translation>
+      <translation>Seleccione el archivo de salida</translation>
     </message>
     <message>
       <source>GeoPackages (*.gpkg);;Shapefiles (*.shp)</source>
@@ -72,11 +116,11 @@
     </message>
     <message>
       <source>Snapping is enabled for the selected vector layer.</source>
-      <translation>La captura (snapping) está habilitada para la capa vectorial seleccionada.</translation>
+      <translation>La captura está habilitada para la capa vectorial seleccionada.</translation>
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Puede habilitar la captura si selecciona exactamente una capa vectorial antes de hacer clic en "Seleccionar en el lienzo".</translation>
+      <translation>Puede habilitar la captura si selecciona exactamente una capa vectorial antes de hacer clic en &apos;Seleccionar en el Mapa&apos;.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -87,64 +131,56 @@
       <translation>Seleccione una capa vectorial para la captura.</translation>
     </message>
     <message>
-      <source>Import from TXT</source>
-      <translation>Importar desde TXT</translation>
+      <source>In this plugin, the Angle field accepts values in the following format: </source>
+      <translation>En este complemento, el campo Ángulo acepta valores en el siguiente formato:</translation>
     </message>
     <message>
-      <source>Text Files (*.txt)</source>
-      <translation>Archivos de texto (*.txt)</translation>
+      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
+      <translation>ACIMUT: como 80-00-00 o similar (sin decimales a menos que se especifique). Ejemplos:</translation>
     </message>
     <message>
-      <source>Initial Point</source>
-      <translation>Punto inicial</translation>
+      <source>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </source>
+      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00.</translation>
     </message>
     <message>
-      <source>Invalid degrees.</source>
-      <translation>Grados no válidos.</translation>
+      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
+      <translation>RUMBO: como 80-00-00-NE (con direcciones NE, NW, SE, SW). Ejemplos:</translation>
     </message>
     <message>
-      <source>Invalid direction.</source>
-      <translation>Dirección no válida.</translation>
+      <source>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </source>
+      <translation>80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE |</translation>
     </message>
     <message>
-      <source>Invalid degrees or minutes.</source>
-      <translation>Grados o minutos no válidos.</translation>
+      <source>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </source>
+      <translation>80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE.</translation>
     </message>
     <message>
-      <source>Invalid seconds.</source>
-      <translation>Segundos no válidos.</translation>
+      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
+      <translation>Direcciones: pueden ser en mayúsculas o minúsculas; no se acepta texto adicional.</translation>
     </message>
     <message>
-      <source>Invalid number of parts for bearing.</source>
-      <translation>Número de partes no válido para el rumbo.</translation>
+      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
+      <translation>Decimales: tanto Ángulo como Distancia aceptan comas o puntos como separadores.</translation>
     </message>
     <message>
-      <source>Export to TXT</source>
-      <translation>Exportar a TXT</translation>
+      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
+      <translation>Nota: Los campos Vértice y Adyacencia son opcionales y pueden quedar en blanco.</translation>
     </message>
     <message>
-      <source>Select import format:</source>
-      <translation>Seleccione el formato de importación:</translation>
-    </message>
-    <message>
-      <source>Azimuth</source>
-      <translation>Acimut</translation>
-    </message>
-    <message>
-      <source>Bearing</source>
-      <translation>Rumbo</translation>
+      <source>Information</source>
+      <translation>Información</translation>
     </message>
     <message>
       <source>No layer selected.</source>
-      <translation>No se seleccionó ninguna capa.</translation>
+      <translation>Ninguna capa seleccionada.</translation>
     </message>
     <message>
       <source>No feature selected.</source>
-      <translation>No se seleccionó ninguna entidad.</translation>
+      <translation>Ninguna entidad seleccionada.</translation>
     </message>
     <message>
       <source>Initial coordinate is required.</source>
-      <translation>Se requiere una coordenada inicial.</translation>
+      <translation>Se requiere la coordenada inicial.</translation>
     </message>
     <message>
       <source>Invalid format for initial coordinate.</source>
@@ -156,83 +192,63 @@
     </message>
     <message>
       <source>No valid azimuth and distance provided.</source>
-      <translation>No se proporcionó un acimut y distancia válidos.</translation>
+      <translation>No se proporcionó un acimut y una distancia válidos.</translation>
     </message>
     <message>
-      <source>ID</source>
-      <translation>ID</translation>
+      <source>Output Lines</source>
+      <translation>Líneas de Salida</translation>
+    </message>
+    <message>
+      <source>Error creating file: {writer.errorMessage()}</source>
+      <translation>Error al crear el archivo: {writer.errorMessage()}</translation>
+    </message>
+    <message>
+      <source>File created at {shapefile_path}</source>
+      <translation>Archivo creado en {shapefile_path}</translation>
+    </message>
+    <message>
+      <source>Temporary layer created.</source>
+      <translation>Capa temporal creada.</translation>
+    </message>
+    <message>
+      <source>Invalid degrees.</source>
+      <translation>Grados inválidos.</translation>
+    </message>
+    <message>
+      <source>Invalid direction.</source>
+      <translation>Dirección inválida.</translation>
+    </message>
+    <message>
+      <source>Invalid degrees or minutes.</source>
+      <translation>Grados o minutos inválidos.</translation>
+    </message>
+    <message>
+      <source>Invalid seconds.</source>
+      <translation>Segundos inválidos.</translation>
+    </message>
+    <message>
+      <source>Invalid number of parts for bearing.</source>
+      <translation>Número inválido de partes para el rumbo.</translation>
+    </message>
+    <message>
+      <source>Invalid bearing format.</source>
+      <translation>Formato de rumbo inválido.</translation>
+    </message>
+    <message>
+      <source>Invalid rumo format</source>
+      <translation>Formato de rumo inválido</translation>
+    </message>
+    <message>
+      <source>Invalid numeric values in angle</source>
+      <translation>Valores numéricos inválidos en el ángulo</translation>
+    </message>
+    <message>
+      <source>Invalid azimute format</source>
+      <translation>Formato de azimute inválido</translation>
     </message>
     <message>
       <source>Distance</source>
       <translation>Distancia</translation>
-    </message>
-    <message>
-      <source>Error creating file: %1</source>
-      <translation>Error al crear el archivo: %1</translation>
-    </message>
-    <message>
-      <source>Output Lines</source>
-      <translation>Líneas de salida</translation>
-    </message>
-    <message>
-      <source>File created at %1</source>
-      <translation>Archivo creado en %1</translation>
-    </message>
-    <message>
-      <source>Temporary layer created.</source>
-      <translation>Se creó una capa temporal.</translation>
-    </message>
-    <message>
-      <source>In this plugin, the Angle field accepts values in the following format: </source>
-      <translation>En este complemento, el campo Ángulo acepta valores en el siguiente formato: </translation>
-    </message>
-    <message>
-      <source>AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: </source>
-      <translation>ACIMUT: como 80-00-00 o similar (sin decimales a menos que se especifique). Ejemplos: </translation>
-    </message>
-    <message>
-      <source>80 -> 80-00-00 | 80-00 -> 80-00-00 | 80-00-00.00 -> 80-00-00.00. </source>
-      <translation>80 -&gt; 80-00-00 | 80-00 -&gt; 80-00-00 | 80-00-00.00 -&gt; 80-00-00.00. </translation>
-    </message>
-    <message>
-      <source>BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: </source>
-      <translation>RUMBO: como 80-00-00-NE (con direcciones NE, NW, SE, SW). Ejemplos: </translation>
-    </message>
-    <message>
-      <source> 80-NE -> 80-00-00-NE | 80-00-NE -> 80-00-00-NE | 80-00-00.00-NE -> 80-00-00.00-NE | </source>
-      <translation> 80-NE -&gt; 80-00-00-NE | 80-00-NE -&gt; 80-00-00-NE | 80-00-00.00-NE -&gt; 80-00-00.00-NE | </translation>
-    </message>
-    <message>
-      <source> 80-45-NE -> 80-45-00-NE | 80-45-38.00-NE -> 80-45-38.00-NE. </source>
-      <translation> 80-45-NE -&gt; 80-45-00-NE | 80-45-38.00-NE -&gt; 80-45-38.00-NE. </translation>
-    </message>
-    <message>
-      <source>Directions: can be uppercase or lowercase; extra text is not accepted. </source>
-      <translation>Direcciones: pueden ser mayúsculas o minúsculas; no se acepta texto adicional. </translation>
-    </message>
-    <message>
-      <source>Decimals: both Angle and Distance accept commas or dots as separators. </source>
-      <translation>Decimales: tanto Ángulo como Distancia aceptan comas o puntos como separadores. </translation>
-    </message>
-    <message>
-      <source>Note: Vertex and Adjacency fields are optional and can be left blank.</source>
-      <translation>Nota: Los campos Vértice y Adyacencia son opcionales y pueden dejarse en blanco.</translation>
-    </message>
-    <message>
-      <source>Error in bearing format: </source>
-      <translation>Error en el formato de rumbo: </translation>
-    </message>
-    <message>
-      <source>&amp;Azimuth Tool</source>
-      <translation>Herramienta de &amp;Acimut</translation>
-    </message>
-    <message>
-      <source>Error in row %1: %2</source>
-      <translation>Error en la fila %1: %2</translation>
-    </message>
-    <message>
-      <source>Information</source>
-      <translation>Información</translation>
     </message>
   </context>
 </TS>

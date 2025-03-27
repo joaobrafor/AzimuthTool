@@ -1,9 +1,10 @@
 from qgis.PyQt.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton,
     QTableWidget, QTableWidgetItem, QFileDialog, QMessageBox, QAction, QToolBar,
-    QHeaderView, QDesktopWidget, QInputDialog
+    QHeaderView, QDesktopWidget, QInputDialog, QGridLayout, QSizePolicy,
+    QComboBox, QSpinBox, QDialogButtonBox
 )
-from qgis.PyQt.QtCore import Qt, QVariant, QCoreApplication, QTranslator, QSettings, QLocale
+from qgis.PyQt.QtCore import Qt, QVariant, QCoreApplication, QTranslator, QSettings, QLocale, QItemSelectionModel
 from qgis.PyQt.QtGui import QIcon
 from qgis.core import (
     QgsFeature, QgsGeometry, QgsPointXY, QgsField, QgsFields, QgsWkbTypes,
@@ -51,6 +52,44 @@ class SnappingPointMapTool(QgsMapToolEmitPoint):
         self.rubberBand.hide()
         super().deactivate()
 
+class ImportOptionsDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(QCoreApplication.translate('ImportOptionsDialog', 'Import Options'))
+        self.layout = QVBoxLayout()
+        self.angle_type_label = QLabel(QCoreApplication.translate('ImportOptionsDialog', 'Select angle type:'))
+        self.angle_type_combo = QComboBox()
+        self.angle_type_combo.addItems([
+            QCoreApplication.translate('ImportOptionsDialog', 'Azimuth'),
+            QCoreApplication.translate('ImportOptionsDialog', 'Bearing')
+        ])
+        self.layout.addWidget(self.angle_type_label)
+        self.layout.addWidget(self.angle_type_combo)
+        self.angle_precision_label = QLabel(QCoreApplication.translate('ImportOptionsDialog', 'Select angle precision (0-10):'))
+        self.angle_precision_spin = QSpinBox()
+        self.angle_precision_spin.setRange(0, 10)
+        self.angle_precision_spin.setValue(3)
+        self.layout.addWidget(self.angle_precision_label)
+        self.layout.addWidget(self.angle_precision_spin)
+        self.distance_precision_label = QLabel(QCoreApplication.translate('ImportOptionsDialog', 'Select distance precision (0-10):'))
+        self.distance_precision_spin = QSpinBox()
+        self.distance_precision_spin.setRange(0, 10)
+        self.distance_precision_spin.setValue(3)
+        self.layout.addWidget(self.distance_precision_label)
+        self.layout.addWidget(self.distance_precision_spin)
+        self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
+        self.layout.addWidget(self.button_box)
+        self.setLayout(self.layout)
+
+    def get_options(self):
+        return {
+            'angle_type': self.angle_type_combo.currentText(),
+            'angle_precision': self.angle_precision_spin.value(),
+            'distance_precision': self.distance_precision_spin.value()
+        }
+
 class AzimuthToolDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -75,7 +114,7 @@ class AzimuthToolDialog(QDialog):
         self.setup_output_shapefile_field()
         self.setup_initial_point_field()
         self.setup_distance_azimuth_table()
-        self.setup_import_export_buttons()
+        self.setup_buttons()
         self.setup_process_button()
         self.setLayout(self.layout)
 
@@ -104,19 +143,18 @@ class AzimuthToolDialog(QDialog):
         self.layout.addLayout(h_layout)
 
     def setup_distance_azimuth_table(self):
-        self.distance_azimuth_label = QLabel(self.tr('List of Vertices, Azimuths/Bearings, Distances, and Adjacency:'))
+        self.distance_azimuth_label = QLabel(self.tr('List of Vertices, Azimuths/Bearings, Distances, and Adjacencies:'))
         info_icon_path = os.path.join(os.path.dirname(__file__), 'icon_info.png')
         self.info_button = QPushButton()
         self.info_button.setIcon(QIcon(info_icon_path))
         self.info_button.clicked.connect(self.show_info)
-
         label_layout = QHBoxLayout()
         label_layout.addWidget(self.distance_azimuth_label)
         label_layout.addWidget(self.info_button)
         label_layout.addStretch()
         self.layout.addLayout(label_layout)
-
         self.table = QTableWidget(10, 4)
+        self.table.setSortingEnabled(False)
         self.table.setHorizontalHeaderLabels([
             self.tr('Vertex'),
             self.tr('Angle'),
@@ -125,31 +163,37 @@ class AzimuthToolDialog(QDialog):
         ])
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-        self.add_row_button = QPushButton('+')
-        self.add_row_button.clicked.connect(self.add_row)
-        self.remove_row_button = QPushButton('-')
-        self.remove_row_button.clicked.connect(self.remove_selected_rows)
-
-        h_layout = QHBoxLayout()
-        h_layout.addWidget(self.remove_row_button)
-        h_layout.addWidget(self.add_row_button)
-
         self.layout.addWidget(self.table)
-        self.layout.addLayout(h_layout)
 
-    def setup_import_export_buttons(self):
+    def setup_buttons(self):
+        row_management_layout = QHBoxLayout()
+        self.remove_row_button = QPushButton(self.tr('-'))
+        self.remove_row_button.clicked.connect(self.remove_selected_rows)
+        self.add_row_button = QPushButton(self.tr('+'))
+        self.add_row_button.clicked.connect(self.add_row)
+        row_management_layout.addWidget(self.remove_row_button)
+        row_management_layout.addWidget(self.add_row_button)
+        self.move_up_button = QPushButton(self.tr('↑'))
+        self.move_up_button.clicked.connect(self.move_rows_up)
+        self.move_down_button = QPushButton(self.tr('↓'))
+        self.move_down_button.clicked.connect(self.move_rows_down)
+        row_management_layout.addWidget(self.move_up_button)
+        row_management_layout.addWidget(self.move_down_button)
+        io_buttons_layout = QHBoxLayout()
         self.import_button = QPushButton(self.tr('Import from .txt'))
         self.import_button.clicked.connect(self.import_from_txt)
         self.export_button = QPushButton(self.tr('Export to .txt'))
         self.export_button.clicked.connect(self.export_to_txt)
         self.import_polygon_button = QPushButton(self.tr('Import from Line/Polygon'))
         self.import_polygon_button.clicked.connect(self.import_from_line_or_polygon)
-        h_layout = QHBoxLayout()
-        h_layout.addWidget(self.import_button)
-        h_layout.addWidget(self.export_button)
-        h_layout.addWidget(self.import_polygon_button)
-        self.layout.addLayout(h_layout)
+        io_buttons_layout.addWidget(self.import_button)
+        io_buttons_layout.addWidget(self.export_button)
+        io_buttons_layout.addWidget(self.import_polygon_button)
+        self.import_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.export_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.import_polygon_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.layout.addLayout(row_management_layout)
+        self.layout.addLayout(io_buttons_layout)
 
     def setup_process_button(self):
         self.process_button = QPushButton(self.tr('Process'))
@@ -225,6 +269,48 @@ class AzimuthToolDialog(QDialog):
         indices = self.table.selectionModel().selectedRows()
         for index in sorted(indices, reverse=True):
             self.table.removeRow(index.row())
+
+    def move_rows_up(self):
+        selected_rows = sorted(self.table.selectionModel().selectedRows(), key=lambda x: x.row())
+        if not selected_rows or selected_rows[0].row() == 0:
+            return
+        new_positions = []
+        for index in selected_rows:
+            row = index.row()
+            if row > 0:
+                self.table.insertRow(row - 1)
+                for col in range(self.table.columnCount()):
+                    item = self.table.takeItem(row + 1, col)
+                    self.table.setItem(row - 1, col, item)
+                self.table.removeRow(row + 1)
+                new_positions.append(row - 1)
+            else:
+                new_positions.append(row)
+        self.table.selectionModel().clearSelection()
+        for pos in new_positions:
+            idx = self.table.model().index(pos, 0)
+            self.table.selectionModel().select(idx, QItemSelectionModel.Select | QItemSelectionModel.Rows)
+
+    def move_rows_down(self):
+        selected_rows = sorted(self.table.selectionModel().selectedRows(), key=lambda x: x.row(), reverse=True)
+        if not selected_rows or selected_rows[0].row() == self.table.rowCount() - 1:
+            return
+        new_positions = []
+        for index in selected_rows:
+            row = index.row()
+            if row < self.table.rowCount() - 1:
+                self.table.insertRow(row + 2)
+                for col in range(self.table.columnCount()):
+                    item = self.table.takeItem(row, col)
+                    self.table.setItem(row + 2, col, item)
+                self.table.removeRow(row)
+                new_positions.append(row + 1)
+            else:
+                new_positions.append(row)
+        self.table.selectionModel().clearSelection()
+        for pos in new_positions:
+            idx = self.table.model().index(pos, 0)
+            self.table.selectionModel().select(idx, QItemSelectionModel.Select | QItemSelectionModel.Rows)
 
     def import_from_txt(self):
         filename, _ = QFileDialog.getOpenFileName(
@@ -426,120 +512,109 @@ class AzimuthToolDialog(QDialog):
                         file.write(f"{vertex};{azimuth_export};{distance_export};{adjacency}\n")
 
     def import_from_line_or_polygon(self):
-        mode, ok = QInputDialog.getItem(
-            self,
-            self.tr('Import from Line/Polygon'),
-            self.tr('Select import format:'),
-            [self.tr('Azimuth'), self.tr('Bearing')],
-            0,
-            False
-        )
-        if not ok:
+        options_dialog = ImportOptionsDialog(self)
+        if options_dialog.exec_() == QDialog.Accepted:
+            options = options_dialog.get_options()
+            mode = options['angle_type']
+            angle_precision = options['angle_precision']
+            distance_precision = options['distance_precision']
+            selected_layers = iface.layerTreeView().selectedLayers()
+            if not selected_layers:
+                self.show_message(self.tr('No layer selected.'))
+                return
+            layer = selected_layers[0]
+            selected_features = layer.selectedFeatures()
+            if not selected_features:
+                self.show_message(self.tr('No feature selected.'))
+                return
+            selected_features = sorted(selected_features, key=lambda f: f.id())
+            self.table.setRowCount(0)
+            project_crs = QgsProject.instance().crs()
+            layer_crs = layer.crs()
+            transform = QgsCoordinateTransform(layer_crs, project_crs, QgsProject.instance())
+            first_vertex_set = False
+            for feature in selected_features:
+                geometry = feature.geometry()
+                if geometry.type() in (QgsWkbTypes.PolygonGeometry, QgsWkbTypes.CurvePolygon):
+                    if geometry.isMultipart():
+                        polygons = geometry.asMultiPolygon() if geometry.type() == QgsWkbTypes.PolygonGeometry else geometry.asMultiSurface()
+                    else:
+                        polygons = [geometry.asPolygon()] if geometry.type() == QgsWkbTypes.PolygonGeometry else [geometry.asCurvePolygon()]
+                    for polygon in polygons:
+                        exterior_ring = polygon[0]
+                        if not first_vertex_set and exterior_ring:
+                            first_vertex = transform.transform(exterior_ring[0])
+                            self.initial_point_edit.setText(f"{first_vertex.x()},{first_vertex.y()}")
+                            first_vertex_set = True
+                        for i in range(len(exterior_ring) - 1):
+                            vertex1 = transform.transform(exterior_ring[i])
+                            vertex2 = transform.transform(exterior_ring[i + 1])
+                            dx = vertex2.x() - vertex1.x()
+                            dy = vertex2.y() - vertex1.y()
+                            angle = math.atan2(dx, dy)
+                            azimuth_decimal = math.degrees(angle) if angle >= 0 else math.degrees(angle) + 360
+                            if mode == QCoreApplication.translate('ImportOptionsDialog', 'Azimuth'):
+                                azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal, precision=angle_precision)
+                            else:
+                                azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal, precision=angle_precision)
+                            distance = self.calculate_distance(vertex1, vertex2)
+                            row_position = self.table.rowCount()
+                            self.table.insertRow(row_position)
+                            self.table.setItem(row_position, 0, QTableWidgetItem(''))
+                            self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
+                            self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.{distance_precision}f}"))
+                            self.table.setItem(row_position, 3, QTableWidgetItem(''))
+                elif geometry.type() == QgsWkbTypes.LineGeometry:
+                    if geometry.isMultipart():
+                        lines = geometry.asMultiPolyline()
+                    else:
+                        lines = [geometry.asPolyline()]
+                    for line in lines:
+                        if len(line) < 2:
+                            continue
+                        transformed_line = [transform.transform(vertex) for vertex in line]
+                        if not first_vertex_set:
+                            self.initial_point_edit.setText(f"{transformed_line[0].x()},{transformed_line[0].y()}")
+                            first_vertex_set = True
+                        for i in range(len(transformed_line) - 1):
+                            vertex1 = transformed_line[i]
+                            vertex2 = transformed_line[i + 1]
+                            dx = vertex2.x() - vertex1.x()
+                            dy = vertex2.y() - vertex1.y()
+                            angle = math.atan2(dx, dy)
+                            azimuth_decimal = math.degrees(angle) if angle >= 0 else math.degrees(angle) + 360
+                            if mode == QCoreApplication.translate('ImportOptionsDialog', 'Azimuth'):
+                                azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal, precision=angle_precision)
+                            else:
+                                azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal, precision=angle_precision)
+                            distance = self.calculate_distance(vertex1, vertex2)
+                            row_position = self.table.rowCount()
+                            self.table.insertRow(row_position)
+                            self.table.setItem(row_position, 0, QTableWidgetItem(''))
+                            self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
+                            self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.{distance_precision}f}"))
+                            self.table.setItem(row_position, 3, QTableWidgetItem(''))
+        else:
             return
-        selected_layers = iface.layerTreeView().selectedLayers()
-        if not selected_layers:
-            self.show_message(self.tr('No layer selected.'))
-            return
-        layer = selected_layers[0]
-        selected_features = layer.selectedFeatures()
-        if not selected_features:
-            self.show_message(self.tr('No feature selected.'))
-            return
-        self.table.setRowCount(0)
-        project_crs = QgsProject.instance().crs()
-        layer_crs = layer.crs()
-        transform = QgsCoordinateTransform(layer_crs, project_crs, QgsProject.instance())
-        first_vertex_set = False
-        for feature in selected_features:
-            geometry = feature.geometry()
-            if geometry.type() in (QgsWkbTypes.PolygonGeometry, QgsWkbTypes.CurvePolygon):
-                if geometry.isMultipart():
-                    polygons = (geometry.asMultiPolygon()
-                                if geometry.type() == QgsWkbTypes.PolygonGeometry
-                                else geometry.asMultiSurface())
-                else:
-                    polygons = ([geometry.asPolygon()]
-                                if geometry.type() == QgsWkbTypes.PolygonGeometry
-                                else [geometry.asCurvePolygon()])
-                for polygon in polygons:
-                    exterior_ring = polygon[0]
-                    if not first_vertex_set and exterior_ring:
-                        first_vertex = transform.transform(exterior_ring[0])
-                        self.initial_point_edit.setText(f"{first_vertex.x()},{first_vertex.y()}")
-                        first_vertex_set = True
-                    for i in range(len(exterior_ring) - 1):
-                        vertex1 = transform.transform(exterior_ring[i])
-                        vertex2 = transform.transform(exterior_ring[i + 1])
-                        dx = vertex2.x() - vertex1.x()
-                        dy = vertex2.y() - vertex1.y()
-                        angle = math.atan2(dx, dy)
-                        azimuth_decimal = math.degrees(angle) if angle >= 0 else math.degrees(angle) + 360
-                        if mode == self.tr('Azimuth'):
-                            azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal)
-                        else:
-                            azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal)
-                        distance = self.calculate_distance(vertex1, vertex2)
-                        row_position = self.table.rowCount()
-                        self.table.insertRow(row_position)
-                        self.table.setItem(row_position, 0, QTableWidgetItem(''))
-                        self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
-                        self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.10f}"))
-                        self.table.setItem(row_position, 3, QTableWidgetItem(''))
-            elif geometry.type() in (QgsWkbTypes.LineGeometry, QgsWkbTypes.CurveLine):
-                if geometry.isMultipart():
-                    lines = (geometry.asMultiPolyline()
-                             if geometry.type() == QgsWkbTypes.LineGeometry
-                             else geometry.asMultiCurve())
-                else:
-                    lines = ([geometry.asPolyline()]
-                             if geometry.type() == QgsWkbTypes.LineGeometry
-                             else [geometry.asCurve()])
-                for line in lines:
-                    if not first_vertex_set and line:
-                        first_vertex = transform.transform(line[0])
-                        self.initial_point_edit.setText(f"{first_vertex.x()},{first_vertex.y()}")
-                        first_vertex_set = True
-                    for i in range(len(line) - 1):
-                        vertex1 = transform.transform(line[i])
-                        vertex2 = transform.transform(line[i + 1])
-                        dx = vertex2.x() - vertex1.x()
-                        dy = vertex2.y() - vertex1.y()
-                        angle = math.atan2(dx, dy)
-                        azimuth_decimal = math.degrees(angle) if angle >= 0 else math.degrees(angle) + 360
-                        if mode == self.tr('Azimuth'):
-                            azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal)
-                        else:
-                            azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal)
-                        distance = self.calculate_distance(vertex1, vertex2)
-                        row_position = self.table.rowCount()
-                        self.table.insertRow(row_position)
-                        self.table.setItem(row_position, 0, QTableWidgetItem(''))
-                        self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
-                        self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.10f}"))
-                        self.table.setItem(row_position, 3, QTableWidgetItem(''))
-
-    def calculate_azimuth(self, point1, point2):
-        dx = point2.x() - point1.x()
-        dy = point2.y() - point1.y()
-        angle = math.atan2(dx, dy)
-        azimuth = math.degrees(angle) if angle >= 0 else math.degrees(angle) + 360
-        return self.convert_decimal_to_dms(azimuth)
 
     def calculate_distance(self, point1, point2):
         return math.sqrt((point2.x() - point1.x())**2 + (point2.y() - point1.y())**2)
 
-    def convert_decimal_to_dms(self, decimal_degrees):
+    def convert_decimal_to_dms(self, decimal_degrees, precision=3):
         degrees = int(decimal_degrees)
         minutes_full = (decimal_degrees - degrees) * 60
         minutes = int(minutes_full)
-        seconds = round((minutes_full - minutes) * 60, 3)
-        if seconds == 60.000:
-            seconds = 0.000
+        seconds = round((minutes_full - minutes) * 60, precision)
+        if seconds >= 60.0:
+            seconds = 0.0
             minutes += 1
-        if minutes == 60:
+        if minutes >= 60:
             minutes = 0
             degrees += 1
-        return f"{degrees:02d}-{minutes:02d}-{seconds:06.3f}"
+        if precision == 0:
+            return f"{degrees:02d}-{minutes:02d}-{int(seconds):02d}"
+        else:
+            return f"{degrees:02d}-{minutes:02d}-{seconds:0.{precision}f}"
 
     def convert_dms_to_decimal(self, dms):
         dms = dms.replace(',', '.')
@@ -576,52 +651,45 @@ class AzimuthToolDialog(QDialog):
             decimal_degrees = 360 - decimal_degrees
         return decimal_degrees
 
-    def convert_decimal_to_rumo(self, decimal_degrees):
+    def convert_decimal_to_rumo(self, decimal_degrees, precision=3):
         if decimal_degrees < 90:
             direction = 'NE'
+            angle = decimal_degrees
         elif decimal_degrees < 180:
             direction = 'SE'
-            decimal_degrees = 180 - decimal_degrees
+            angle = 180 - decimal_degrees
         elif decimal_degrees < 270:
             direction = 'SW'
-            decimal_degrees = decimal_degrees - 180
+            angle = decimal_degrees - 180
         else:
             direction = 'NW'
-            decimal_degrees = 360 - decimal_degrees
-        degrees = int(decimal_degrees)
-        minutes_full = (decimal_degrees - degrees) * 60
+            angle = 360 - decimal_degrees
+        degrees = int(angle)
+        minutes_full = (angle - degrees) * 60
         minutes = int(minutes_full)
-        seconds = round((minutes_full - minutes) * 60, 3)
-        if seconds == 60.000:
-            seconds = 0.000
+        seconds = round((minutes_full - minutes) * 60, precision)
+        if seconds >= 60.0:
+            seconds = 0.0
             minutes += 1
-        if minutes == 60:
+        if minutes >= 60:
             minutes = 0
             degrees += 1
-        return f"{degrees:02d}-{minutes:02d}-{seconds:06.3f}-{direction}"
-
-    def format_dms(self, dms, sep='.'):
-        parts = dms.split('-')
-        degrees = int(parts[0])
-        minutes = int(parts[1])
-        seconds = round(float(parts[2].replace(',', '.')), 3)
-        if seconds == int(seconds):
-            seconds = int(seconds)
-            return f"{degrees}°{minutes:02d}'{seconds:02d}\"".replace('.', sep)
+        if precision == 0:
+            return f"{degrees:02d}-{minutes:02d}-{int(seconds):02d}-{direction}"
         else:
-            return f"{degrees}°{minutes:02d}'{seconds:06.3f}\"".replace('.', sep)
+            return f"{degrees:02d}-{minutes:02d}-{seconds:0.{precision}f}-{direction}"
 
     def show_info(self):
         info_text = (
-            self.tr("In this plugin, the Angle field accepts values in the following format: ") +
-            self.tr("AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: ") +
-            self.tr("80 -> 80-00-00 | 80-00 -> 80-00-00 | 80-00-00.00 -> 80-00-00.00. ") +
-            self.tr("BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: ") +
-            self.tr("80-NE -> 80-00-00-NE | 80-00-NE -> 80-00-00-NE | 80-00-00.00-NE -> 80-00-00.00-NE | ") +
-            self.tr("80-45-NE -> 80-45-00-NE | 80-45-38.00-NE -> 80-45-38.00-NE. ") +
-            self.tr("Directions: can be uppercase or lowercase; extra text is not accepted. ") +
-            self.tr("Decimals: both Angle and Distance accept commas or dots as separators. ") +
-            self.tr("Note: Vertex and Adjacency fields are optional and can be left blank.")
+            self.tr("In this plugin, the Angle field accepts values in the following format: ")
+            + self.tr("AZIMUTH: such as 80-00-00 or similar (without decimals unless specified). Examples: ")
+            + self.tr("80 -> 80-00-00 | 80-00 -> 80-00-00 | 80-00-00.00 -> 80-00-00.00. ")
+            + self.tr("BEARING: such as 80-00-00-NE (with directions NE, NW, SE, SW). Examples: ")
+            + self.tr("80-NE -> 80-00-00-NE | 80-00-NE -> 80-00-00-NE | 80-00-00.00-NE -> 80-00-00.00-NE | ")
+            + self.tr("80-45-NE -> 80-45-00-NE | 80-45-38.00-NE -> 80-45-38.00-NE. ")
+            + self.tr("Directions: can be uppercase or lowercase; extra text is not accepted. ")
+            + self.tr("Decimals: both Angle and Distance accept commas or dots as separators. ")
+            + self.tr("Note: Vertex and Adjacency fields are optional and can be left blank.")
         )
         QMessageBox.information(self, self.tr('Information'), info_text)
 
@@ -654,7 +722,7 @@ class AzimuthToolDialog(QDialog):
                 minutes = numeric_parts[1]
                 seconds = numeric_parts[2]
             else:
-                raise ValueError("Invalid rumo format")
+                raise ValueError(self.tr("Invalid rumo format"))
             try:
                 int(degrees)
                 int(minutes)
@@ -664,7 +732,7 @@ class AzimuthToolDialog(QDialog):
                     else:
                         float(seconds)
             except ValueError:
-                raise ValueError("Invalid numeric values in angle")
+                raise ValueError(self.tr("Invalid numeric values in angle"))
             return 'rumo', degrees, minutes, seconds, direction, sep
         else:
             if len(parts) == 1:
@@ -684,7 +752,7 @@ class AzimuthToolDialog(QDialog):
                 minutes = parts[1]
                 seconds = parts[2]
             else:
-                raise ValueError("Invalid azimute format")
+                raise ValueError(self.tr("Invalid azimute format"))
             try:
                 int(degrees)
                 int(minutes)
@@ -694,7 +762,7 @@ class AzimuthToolDialog(QDialog):
                     else:
                         float(seconds)
             except ValueError:
-                raise ValueError("Invalid numeric values in angle")
+                raise ValueError(self.tr("Invalid numeric values in angle"))
             return 'azimute', degrees, minutes, seconds, sep
 
     def show_message(self, message):
@@ -715,6 +783,7 @@ class AzimuthToolDialog(QDialog):
             self.show_info()
             return
         distances_azimuths = []
+        max_precision = 0
         for row in range(self.table.rowCount()):
             vertex_item = self.table.item(row, 0)
             azimuth_item = self.table.item(row, 1)
@@ -728,10 +797,15 @@ class AzimuthToolDialog(QDialog):
                     azimuth = self.convert_rumo_to_decimal(azimuth_dms)
                 else:
                     azimuth = self.convert_dms_to_decimal(azimuth_dms)
-                distance = float(distance_item.text().replace(',', '.'))
+                distance_text = distance_item.text().replace(',', '.')
+                distance = float(distance_text)
+                if '.' in distance_text:
+                    precision = len(distance_text.split('.')[1])
+                    if precision > max_precision:
+                        max_precision = precision
                 vertex = vertex_item.text() if vertex_item else ''
                 adjacency = adjacency_item.text() if adjacency_item else ''
-                distances_azimuths.append((vertex, azimuth, round(distance, 10), adjacency, azimuth_item.text()))
+                distances_azimuths.append((vertex, azimuth, distance, adjacency, azimuth_item.text()))
             except ValueError:
                 err_template = self.tr("Invalid data in row %1.")
                 err_text = err_template.replace("%1", str(row + 1))
@@ -743,7 +817,7 @@ class AzimuthToolDialog(QDialog):
             self.show_info()
             return
         points = self.calculate_points(initial_point, distances_azimuths)
-        self.create_shapefile(output_shapefile_path, points, distances_azimuths)
+        self.create_shapefile(output_shapefile_path, points, distances_azimuths, max_precision)
 
     def calculate_points(self, initial_point, distance_azimuths):
         points = [initial_point]
@@ -756,14 +830,12 @@ class AzimuthToolDialog(QDialog):
             points.append(new_point)
         return points
 
-    def create_shapefile(self, shapefile_path, points, distances_azimuths):
+    def create_shapefile(self, shapefile_path, points, distances_azimuths, max_precision):
         fields = QgsFields()
-        fields.append(QgsField(self.tr('ID'), QVariant.Double, 'numeric', 10, 0))
         fields.append(QgsField(self.tr('Vertex'), QVariant.String))
         fields.append(QgsField(self.tr('Angle'), QVariant.String))
-        fields.append(QgsField(self.tr('Distance'), QVariant.Double, 'numeric', 20, 3))
+        fields.append(QgsField(self.tr('Distance'), QVariant.Double, 'double', 20, max_precision))
         fields.append(QgsField(self.tr('Adjacency'), QVariant.String))
-
         crs = QgsProject.instance().crs()
         if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
             if shapefile_path.lower().endswith('.shp'):
@@ -791,42 +863,43 @@ class AzimuthToolDialog(QDialog):
             pr = layer.dataProvider()
             pr.addAttributes(fields)
             layer.updateFields()
-
+        pr = layer.dataProvider()
         for i in range(len(points) - 1):
             feature = QgsFeature()
             feature.setGeometry(QgsGeometry.fromPolylineXY([points[i], points[i + 1]]))
             vertex, azimuth, distance, adjacency, azimuth_dms = distances_azimuths[i]
             try:
-                angle_type, deg, min, sec, *extra = self.parse_angle(azimuth_dms)
-                if angle_type == 'rumo':
-                    direction = extra[0]
-                    sep = extra[1]
-                    if sep and sep in sec:
-                        sec_parts = sec.split(sep)
+                parsed = self.parse_angle(azimuth_dms)
+                if parsed[0] == 'rumo':
+                    angle_type, degrees, minutes, seconds, direction, sep = parsed
+                    if sep and sep in seconds:
+                        sec_parts = seconds.split(sep)
                         sec_int = sec_parts[0].zfill(2)
                         sec_dec = sec_parts[1] if len(sec_parts) > 1 else '000'
                         sec_formatted = f"{sec_int}{sep}{sec_dec}"
                     else:
-                        sec_formatted = sec.zfill(2)
-                    angle_formatted = f"{deg.zfill(2)}°{min.zfill(2)}'{sec_formatted}\"{direction}"
+                        sec_formatted = seconds.zfill(2)
+                    angle_formatted = f"{degrees.zfill(2)}°{minutes.zfill(2)}'{sec_formatted}\"{direction}"
                 else:
-                    sep = extra[0]
-                    if sep and sep in sec:
-                        sec_parts = sec.split(sep)
+                    angle_type, degrees, minutes, seconds, sep = parsed
+                    if sep and sep in seconds:
+                        sec_parts = seconds.split(sep)
                         sec_int = sec_parts[0].zfill(2)
                         sec_dec = sec_parts[1] if len(sec_parts) > 1 else '000'
                         sec_formatted = f"{sec_int}{sep}{sec_dec}"
                     else:
-                        sec_formatted = sec.zfill(2)
-                    angle_formatted = f"{deg.zfill(2)}°{min.zfill(2)}'{sec_formatted}\""
-            except ValueError as e:
-                self.show_message(self.tr(f"Invalid angle format in row {i+1}: {e}"))
+                        sec_formatted = seconds.zfill(2)
+                    angle_formatted = f"{degrees.zfill(2)}°{minutes.zfill(2)}'{sec_formatted}\""
+            except ValueError:
+                err_template = self.tr("Invalid data in row %1.")
+                err_text = err_template.replace("%1", str(i + 1))
+                self.show_message(err_text)
                 self.show_info()
                 return
-            attributes = [i + 1, vertex, angle_formatted, round(distance, 3), adjacency]
+            distance_formatted = round(distance, max_precision)
+            attributes = [vertex, angle_formatted, distance_formatted, adjacency]
             feature.setAttributes(attributes)
             pr.addFeature(feature)
-
         layer.updateExtents()
         QgsProject.instance().addMapLayer(layer)
         if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
