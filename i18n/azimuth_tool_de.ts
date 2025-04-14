@@ -19,6 +19,18 @@
       <translation>Peilung (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Wählen Sie das Dezimaltrennzeichen:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Komma</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Punkt</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Wählen Sie die Winkelgenauigkeit (0-10):</translation>
     </message>

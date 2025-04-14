@@ -19,6 +19,18 @@
       <translation>Bearing</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Select decimal separator:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Comma</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Dot</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Select angle precision (0-10):</translation>
     </message>

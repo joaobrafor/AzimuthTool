@@ -19,6 +19,18 @@
       <translation>رسم المسار (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>اختر الفاصل العشري:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>فاصلة</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>نقطة</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>اختر دقة الزاوية (0-10):</translation>
     </message>

@@ -19,6 +19,18 @@
       <translation>Bearing</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Seleziona il separatore decimale:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Virgola</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Punto</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Seleziona la precisione dell'angolo (0-10):</translation>
     </message>

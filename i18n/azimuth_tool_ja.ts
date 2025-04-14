@@ -19,6 +19,18 @@
       <translation>方向 (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>小数点区切りを選択：</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>コンマ</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>ドット</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>角度の精度を選択 (0-10)：</translation>
     </message>

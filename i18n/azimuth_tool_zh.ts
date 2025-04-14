@@ -19,6 +19,18 @@
       <translation>航向 (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>选择小数分隔符：</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>逗号</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>点</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>选择角度精度 (0-10)：</translation>
     </message>

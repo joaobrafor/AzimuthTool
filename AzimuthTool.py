@@ -65,6 +65,14 @@ class ImportOptionsDialog(QDialog):
         ])
         self.layout.addWidget(self.angle_type_label)
         self.layout.addWidget(self.angle_type_combo)
+        self.decimal_separator_label = QLabel(QCoreApplication.translate('ImportOptionsDialog', 'Select decimal separator:'))
+        self.decimal_separator_combo = QComboBox()
+        self.decimal_separator_combo.addItems([
+            QCoreApplication.translate('ImportOptionsDialog', 'Comma'),
+            QCoreApplication.translate('ImportOptionsDialog', 'Dot')
+        ])
+        self.layout.addWidget(self.decimal_separator_label)
+        self.layout.addWidget(self.decimal_separator_combo)
         self.angle_precision_label = QLabel(QCoreApplication.translate('ImportOptionsDialog', 'Select angle precision (0-10):'))
         self.angle_precision_spin = QSpinBox()
         self.angle_precision_spin.setRange(0, 10)
@@ -86,6 +94,7 @@ class ImportOptionsDialog(QDialog):
     def get_options(self):
         return {
             'angle_type': self.angle_type_combo.currentText(),
+            'decimal_separator': 'Comma' if self.decimal_separator_combo.currentIndex() == 0 else 'Dot',
             'angle_precision': self.angle_precision_spin.value(),
             'distance_precision': self.distance_precision_spin.value()
         }
@@ -262,8 +271,12 @@ class AzimuthToolDialog(QDialog):
         self.mapTool = None
 
     def add_row(self):
-        row_count = self.table.rowCount()
-        self.table.insertRow(row_count)
+        selected_rows = self.table.selectionModel().selectedRows()
+        if selected_rows:
+            index = selected_rows[0].row() + 1
+        else:
+            index = self.table.rowCount()
+        self.table.insertRow(index)
 
     def remove_selected_rows(self):
         indices = self.table.selectionModel().selectedRows()
@@ -472,22 +485,7 @@ class AzimuthToolDialog(QDialog):
         return f"{deg:02d}-{minutes:02d}-{seconds_str}-{direction}"
 
     def export_format_distance(self, distance_text):
-        try:
-            value = float(distance_text.replace(',', '.'))
-        except ValueError:
-            return distance_text
-        sep = ',' if ',' in distance_text else '.'
-        s = distance_text.replace(',', '.')
-        if '.' in s:
-            decimals = len(s.split('.')[1])
-            if decimals < 3:
-                decimals = 3
-            formatted = f"{value:0.{decimals}f}"
-        else:
-            formatted = f"{value:0.3f}"
-        if sep == ',':
-            formatted = formatted.replace('.', ',')
-        return formatted
+        return distance_text
 
     def export_to_txt(self):
         filename, _ = QFileDialog.getSaveFileName(
@@ -507,7 +505,7 @@ class AzimuthToolDialog(QDialog):
                     distance_raw = distance_item.text() if distance_item else ''
                     adjacency = adjacency_item.text() if adjacency_item else ''
                     if raw_azimuth or distance_raw or adjacency or vertex:
-                        azimuth_export = self.export_from_txt_normalization(raw_azimuth) if raw_azimuth else ''
+                        azimuth_export = raw_azimuth if raw_azimuth else ''
                         distance_export = self.export_format_distance(distance_raw) if distance_raw else ''
                         file.write(f"{vertex};{azimuth_export};{distance_export};{adjacency}\n")
 
@@ -516,6 +514,7 @@ class AzimuthToolDialog(QDialog):
         if options_dialog.exec_() == QDialog.Accepted:
             options = options_dialog.get_options()
             mode = options['angle_type']
+            decimal_separator_option = options['decimal_separator']
             angle_precision = options['angle_precision']
             distance_precision = options['distance_precision']
             selected_layers = iface.layerTreeView().selectedLayers()
@@ -557,12 +556,17 @@ class AzimuthToolDialog(QDialog):
                                 azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal, precision=angle_precision)
                             else:
                                 azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal, precision=angle_precision)
+                            if decimal_separator_option == "Comma":
+                                azimuth_formatted = azimuth_formatted.replace('.', ',')
                             distance = self.calculate_distance(vertex1, vertex2)
+                            distance_str = f"{distance:.{distance_precision}f}"
+                            if decimal_separator_option == "Comma":
+                                distance_str = distance_str.replace('.', ',')
                             row_position = self.table.rowCount()
                             self.table.insertRow(row_position)
                             self.table.setItem(row_position, 0, QTableWidgetItem(''))
                             self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
-                            self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.{distance_precision}f}"))
+                            self.table.setItem(row_position, 2, QTableWidgetItem(distance_str))
                             self.table.setItem(row_position, 3, QTableWidgetItem(''))
                 elif geometry.type() == QgsWkbTypes.LineGeometry:
                     if geometry.isMultipart():
@@ -587,12 +591,17 @@ class AzimuthToolDialog(QDialog):
                                 azimuth_formatted = self.convert_decimal_to_dms(azimuth_decimal, precision=angle_precision)
                             else:
                                 azimuth_formatted = self.convert_decimal_to_rumo(azimuth_decimal, precision=angle_precision)
+                            if decimal_separator_option == "Comma":
+                                azimuth_formatted = azimuth_formatted.replace('.', ',')
                             distance = self.calculate_distance(vertex1, vertex2)
+                            distance_str = f"{distance:.{distance_precision}f}"
+                            if decimal_separator_option == "Comma":
+                                distance_str = distance_str.replace('.', ',')
                             row_position = self.table.rowCount()
                             self.table.insertRow(row_position)
                             self.table.setItem(row_position, 0, QTableWidgetItem(''))
                             self.table.setItem(row_position, 1, QTableWidgetItem(azimuth_formatted))
-                            self.table.setItem(row_position, 2, QTableWidgetItem(f"{distance:.{distance_precision}f}"))
+                            self.table.setItem(row_position, 2, QTableWidgetItem(distance_str))
                             self.table.setItem(row_position, 3, QTableWidgetItem(''))
         else:
             return
@@ -832,6 +841,7 @@ class AzimuthToolDialog(QDialog):
 
     def create_shapefile(self, shapefile_path, points, distances_azimuths, max_precision):
         fields = QgsFields()
+        fields.append(QgsField('ID', QVariant.Int))
         fields.append(QgsField(self.tr('Vertex'), QVariant.String))
         fields.append(QgsField(self.tr('Angle'), QVariant.String))
         fields.append(QgsField(self.tr('Distance'), QVariant.Double, 'double', 20, max_precision))
@@ -897,7 +907,7 @@ class AzimuthToolDialog(QDialog):
                 self.show_info()
                 return
             distance_formatted = round(distance, max_precision)
-            attributes = [vertex, angle_formatted, distance_formatted, adjacency]
+            attributes = [i + 1, vertex, angle_formatted, distance_formatted, adjacency]
             feature.setAttributes(attributes)
             pr.addFeature(feature)
         layer.updateExtents()

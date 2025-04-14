@@ -19,6 +19,18 @@
       <translation>Kierunek (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Wybierz separator dziesiętny:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Przecinek</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Kropka</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Wybierz precyzję kąta (0-10):</translation>
     </message>

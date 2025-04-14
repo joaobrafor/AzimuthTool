@@ -19,6 +19,18 @@
       <translation>Relèvement (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Sélectionnez le séparateur décimal :</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Virgule</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Point</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Sélectionnez la précision de l'angle (0-10) :</translation>
     </message>

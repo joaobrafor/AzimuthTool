@@ -11,6 +11,18 @@
       <translation>Selecione o tipo de ângulo:</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Selecione o separador decimal:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Vírgula</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Ponto</translation>
+    </message>
+    <message>
       <source>Azimuth</source>
       <translation>Azimute (Azimuth)</translation>
     </message>

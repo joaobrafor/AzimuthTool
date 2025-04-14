@@ -19,6 +19,18 @@
       <translation>Rumbo (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Seleccione el separador decimal:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Coma</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Punto</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Seleccione la precisión del ángulo (0-10):</translation>
     </message>

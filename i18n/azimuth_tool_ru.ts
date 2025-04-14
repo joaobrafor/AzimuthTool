@@ -19,6 +19,18 @@
       <translation>Курс (Bearing)</translation>
     </message>
     <message>
+      <source>Select decimal separator:</source>
+      <translation>Выберите разделитель десятичной части:</translation>
+    </message>
+    <message>
+      <source>Comma</source>
+      <translation>Запятая</translation>
+    </message>
+    <message>
+      <source>Dot</source>
+      <translation>Точка</translation>
+    </message>
+    <message>
       <source>Select angle precision (0-10):</source>
       <translation>Выберите точность угла (0-10):</translation>
     </message>
