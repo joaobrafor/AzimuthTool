@@ -39,7 +39,6 @@
       <translation>距離の精度を選択 (0-10)：</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>ライン/ポリゴンからインポート</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>処理</translation>
+      <source>Process as Point</source>
+      <translation>ポイントとして処理</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>ラインとして処理</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>ポリゴンとして処理</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>距離</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>初期点</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>ポリゴンを作成するには、少なくとも2つのセグメントが必要です。</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>最終頂点の確認</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>最後の頂点を使用してポリゴンを閉じますか？</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>出力ポイント</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>出力ポリゴン</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>TXTからインポート</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>TXTへエクスポート</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>テキストファイル (*.txt)</translation>
     </message>
   </context>
 </TS>

@@ -39,7 +39,6 @@
       <translation>Wählen Sie die Distanzgenauigkeit (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>Von Linie/Polygon importieren</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>Verarbeiten</translation>
+      <source>Process as Point</source>
+      <translation>Als Punkt verarbeiten</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>Als Linie verarbeiten</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>Als Polygon verarbeiten</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Sie können Snapping aktivieren, wenn Sie genau eine Vektorebene auswählen, bevor Sie &apos;Auf der Karte auswählen&apos; anklicken.</translation>
+      <translation>Sie können Snapping aktivieren, wenn Sie genau eine Vektorebene auswählen, bevor Sie 'Auf der Karte auswählen' anklicken.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>Entfernung</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>Anfangspunkt</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>Es sind mindestens 2 Segmente erforderlich, um ein Polygon zu erstellen.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>Letzten Vertex bestätigen</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>Möchten Sie den letzten Vertex verwenden, um das Polygon zu schließen?</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>Ausgabepunkte</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>Ausgabepolygon</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>Aus TXT importieren</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>In TXT exportieren</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>Textdateien (*.txt)</translation>
     </message>
   </context>
 </TS>

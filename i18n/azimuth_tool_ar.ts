@@ -39,7 +39,6 @@
       <translation>اختر دقة المسافة (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>استيراد من خط/مضلع</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>تنفيذ</translation>
+      <source>Process as Point</source>
+      <translation>معالجة كنقطة</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>معالجة كخط</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>معالجة كمضلع</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>يمكنك تفعيل الالتقاط إذا اخترت طبقة متجهة واحدة بالضبط قبل النقر على &apos;اختر على الخريطة&apos;.</translation>
+      <translation>يمكنك تفعيل الالتقاط إذا اخترت طبقة متجهة واحدة بالضبط قبل النقر على 'اختر على الخريطة'.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>المسافة</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>نقطة البداية</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>مطلوب قطعتان على الأقل لإنشاء مضلع.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>تأكيد الرأس الأخير</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>هل تريد استخدام الرأس الأخير لإغلاق المضلع؟</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>نقاط الإخراج</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>مضلع الإخراج</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>استيراد من TXT</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>تصدير إلى TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>ملفات نصية (*.txt)</translation>
     </message>
   </context>
 </TS>

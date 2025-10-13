@@ -39,7 +39,6 @@
       <translation>选择距离精度 (0-10)：</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>从线/多边形导入</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>处理</translation>
+      <source>Process as Point</source>
+      <translation>处理为点</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>处理为线</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>处理为多边形</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>距离</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>初始点</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>创建多边形至少需要2个线段。</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>确认最后一个顶点</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>您要使用最后一个顶点来闭合多边形吗？</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>输出点</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>输出多边形</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>从TXT导入</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>导出到TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>文本文件 (*.txt)</translation>
     </message>
   </context>
 </TS>

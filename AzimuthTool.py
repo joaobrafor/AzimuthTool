@@ -205,9 +205,17 @@ class AzimuthToolDialog(QDialog):
         self.layout.addLayout(io_buttons_layout)
 
     def setup_process_button(self):
-        self.process_button = QPushButton(self.tr('Process'))
-        self.process_button.clicked.connect(self.process_data)
-        self.layout.addWidget(self.process_button)
+        process_layout = QHBoxLayout()
+        self.process_point_button = QPushButton(self.tr('Process as Point'))
+        self.process_line_button = QPushButton(self.tr('Process as Line'))
+        self.process_polygon_button = QPushButton(self.tr('Process as Polygon'))
+        self.process_point_button.clicked.connect(self.process_as_point)
+        self.process_line_button.clicked.connect(self.process_as_line)
+        self.process_polygon_button.clicked.connect(self.process_as_polygon)
+        process_layout.addWidget(self.process_point_button)
+        process_layout.addWidget(self.process_line_button)
+        process_layout.addWidget(self.process_polygon_button)
+        self.layout.addLayout(process_layout)
 
     def set_temporary_output_path(self):
         self.output_shapefile_edit.setText(self.tr('Temporary Layer'))
@@ -777,20 +785,17 @@ class AzimuthToolDialog(QDialog):
     def show_message(self, message):
         QMessageBox.information(self, self.tr('Information'), message)
 
-    def process_data(self):
-        output_shapefile_path = self.output_shapefile_edit.text()
+    def _parse_and_validate_data(self):
         initial_point_text = self.initial_point_edit.text()
         if not initial_point_text:
             self.show_message(self.tr('Initial coordinate is required.'))
-            self.show_info()
-            return
+            return None, None, None
         try:
             x, y = map(float, initial_point_text.split(','))
             initial_point = QgsPointXY(x, y)
         except ValueError:
             self.show_message(self.tr('Invalid format for initial coordinate.'))
-            self.show_info()
-            return
+            return None, None, None
         distances_azimuths = []
         max_precision = 0
         for row in range(self.table.rowCount()):
@@ -798,7 +803,7 @@ class AzimuthToolDialog(QDialog):
             azimuth_item = self.table.item(row, 1)
             distance_item = self.table.item(row, 2)
             adjacency_item = self.table.item(row, 3)
-            if not azimuth_item or not distance_item:
+            if not azimuth_item or not distance_item or not azimuth_item.text() or not distance_item.text():
                 continue
             try:
                 azimuth_dms = azimuth_item.text().replace(',', '.')
@@ -815,18 +820,51 @@ class AzimuthToolDialog(QDialog):
                 vertex = vertex_item.text() if vertex_item else ''
                 adjacency = adjacency_item.text() if adjacency_item else ''
                 distances_azimuths.append((vertex, azimuth, distance, adjacency, azimuth_item.text()))
-            except ValueError:
+            except (ValueError, IndexError):
                 err_template = self.tr("Invalid data in row %1.")
                 err_text = err_template.replace("%1", str(row + 1))
                 self.show_message(err_text)
-                self.show_info()
-                return
+                return None, None, None
         if not distances_azimuths:
             self.show_message(self.tr('No valid azimuth and distance provided.'))
-            self.show_info()
+            return None, None, None
+        return initial_point, distances_azimuths, max_precision
+
+    def process_as_point(self):
+        initial_point, distances_azimuths, max_precision = self._parse_and_validate_data()
+        if initial_point is None:
             return
         points = self.calculate_points(initial_point, distances_azimuths)
-        self.create_shapefile(output_shapefile_path, points, distances_azimuths, max_precision)
+        self.create_point_shapefile(self.output_shapefile_edit.text(), points, distances_azimuths, max_precision)
+
+    def process_as_line(self):
+        initial_point, distances_azimuths, max_precision = self._parse_and_validate_data()
+        if initial_point is None:
+            return
+        points = self.calculate_points(initial_point, distances_azimuths)
+        self.create_line_shapefile(self.output_shapefile_edit.text(), points, distances_azimuths, max_precision)
+
+    def process_as_polygon(self):
+        initial_point, distances_azimuths, max_precision = self._parse_and_validate_data()
+        if initial_point is None:
+            return
+        points = self.calculate_points(initial_point, distances_azimuths)
+        if len(points) < 3:
+            self.show_message(self.tr('At least 2 segments are required to create a polygon.'))
+            return
+        reply = QMessageBox.question(self,
+                                       self.tr('Confirm Last Vertex'),
+                                       self.tr('Do you want to use the last vertex to close the polygon?'),
+                                       QMessageBox.Yes | QMessageBox.No,
+                                       QMessageBox.Yes)
+        if reply == QMessageBox.Yes:
+            points_for_polygon = points
+        else:
+            points_for_polygon = points[:-1]
+        if len(points_for_polygon) < 3:
+            self.show_message(self.tr('At least 2 segments are required to create a polygon.'))
+            return
+        self.create_polygon_shapefile(self.output_shapefile_edit.text(), points_for_polygon, max_precision)
 
     def calculate_points(self, initial_point, distance_azimuths):
         points = [initial_point]
@@ -839,7 +877,7 @@ class AzimuthToolDialog(QDialog):
             points.append(new_point)
         return points
 
-    def create_shapefile(self, shapefile_path, points, distances_azimuths, max_precision):
+    def create_line_shapefile(self, shapefile_path, points, distances_azimuths, max_precision):
         fields = QgsFields()
         fields.append(QgsField('ID', QVariant.Int))
         fields.append(QgsField(self.tr('Vertex'), QVariant.String))
@@ -860,7 +898,6 @@ class AzimuthToolDialog(QDialog):
             )
             if writer.hasError() != QgsVectorFileWriter.NoError:
                 self.show_message(self.tr(f'Error creating file: {writer.errorMessage()}'))
-                self.show_info()
                 return
             del writer
             layer = QgsVectorLayer(shapefile_path, os.path.basename(shapefile_path), 'ogr')
@@ -904,12 +941,128 @@ class AzimuthToolDialog(QDialog):
                 err_template = self.tr("Invalid data in row %1.")
                 err_text = err_template.replace("%1", str(i + 1))
                 self.show_message(err_text)
-                self.show_info()
                 return
             distance_formatted = round(distance, max_precision)
             attributes = [i + 1, vertex, angle_formatted, distance_formatted, adjacency]
             feature.setAttributes(attributes)
             pr.addFeature(feature)
+        layer.updateExtents()
+        QgsProject.instance().addMapLayer(layer)
+        if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
+            self.show_message(self.tr(f'File created at {shapefile_path}'))
+        else:
+            self.show_message(self.tr('Temporary layer created.'))
+
+    def create_point_shapefile(self, shapefile_path, points, distances_azimuths, max_precision):
+        fields = QgsFields()
+        fields.append(QgsField('ID', QVariant.Int))
+        fields.append(QgsField(self.tr('Vertex'), QVariant.String))
+        fields.append(QgsField(self.tr('Angle'), QVariant.String))
+        fields.append(QgsField(self.tr('Distance'), QVariant.Double, 'double', 20, max_precision))
+        fields.append(QgsField(self.tr('Adjacency'), QVariant.String))
+        crs = QgsProject.instance().crs()
+        if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
+            if shapefile_path.lower().endswith('.shp'):
+                driver_name = 'ESRI Shapefile'
+            elif shapefile_path.lower().endswith('.gpkg'):
+                driver_name = 'GPKG'
+            else:
+                driver_name = 'ESRI Shapefile'
+            writer = QgsVectorFileWriter(
+                shapefile_path, 'UTF-8', fields,
+                QgsWkbTypes.Point, crs, driver_name
+            )
+            if writer.hasError() != QgsVectorFileWriter.NoError:
+                self.show_message(self.tr(f'Error creating file: {writer.errorMessage()}'))
+                return
+            del writer
+            layer = QgsVectorLayer(shapefile_path, os.path.basename(shapefile_path), 'ogr')
+        else:
+            layer = QgsVectorLayer(
+                f'Point?crs={crs.authid()}',
+                self.tr('Output Points'),
+                'memory'
+            )
+            pr = layer.dataProvider()
+            pr.addAttributes(fields)
+            layer.updateFields()
+        pr = layer.dataProvider()
+        for i in range(len(points) - 1):
+            feature = QgsFeature()
+            feature.setGeometry(QgsGeometry.fromPointXY(points[i]))
+            vertex, azimuth, distance, adjacency, azimuth_dms = distances_azimuths[i]
+            try:
+                parsed = self.parse_angle(azimuth_dms)
+                if parsed[0] == 'rumo':
+                    angle_type, degrees, minutes, seconds, direction, sep = parsed
+                    if sep and sep in seconds:
+                        sec_parts = seconds.split(sep)
+                        sec_int = sec_parts[0].zfill(2)
+                        sec_dec = sec_parts[1] if len(sec_parts) > 1 else '000'
+                        sec_formatted = f"{sec_int}{sep}{sec_dec}"
+                    else:
+                        sec_formatted = seconds.zfill(2)
+                    angle_formatted = f"{degrees.zfill(2)}°{minutes.zfill(2)}'{sec_formatted}\"{direction}"
+                else:
+                    angle_type, degrees, minutes, seconds, sep = parsed
+                    if sep and sep in seconds:
+                        sec_parts = seconds.split(sep)
+                        sec_int = sec_parts[0].zfill(2)
+                        sec_dec = sec_parts[1] if len(sec_parts) > 1 else '000'
+                        sec_formatted = f"{sec_int}{sep}{sec_dec}"
+                    else:
+                        sec_formatted = seconds.zfill(2)
+                    angle_formatted = f"{degrees.zfill(2)}°{minutes.zfill(2)}'{sec_formatted}\""
+            except ValueError:
+                err_template = self.tr("Invalid data in row %1.")
+                err_text = err_template.replace("%1", str(i + 1))
+                self.show_message(err_text)
+                return
+            distance_formatted = round(distance, max_precision)
+            attributes = [i + 1, vertex, angle_formatted, distance_formatted, adjacency]
+            feature.setAttributes(attributes)
+            pr.addFeature(feature)
+        layer.updateExtents()
+        QgsProject.instance().addMapLayer(layer)
+        if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
+            self.show_message(self.tr(f'File created at {shapefile_path}'))
+        else:
+            self.show_message(self.tr('Temporary layer created.'))
+
+    def create_polygon_shapefile(self, shapefile_path, points, max_precision):
+        fields = QgsFields()
+        fields.append(QgsField('ID', QVariant.Int))
+        crs = QgsProject.instance().crs()
+        if shapefile_path and shapefile_path != self.tr('Temporary Layer'):
+            if shapefile_path.lower().endswith('.shp'):
+                driver_name = 'ESRI Shapefile'
+            elif shapefile_path.lower().endswith('.gpkg'):
+                driver_name = 'GPKG'
+            else:
+                driver_name = 'ESRI Shapefile'
+            writer = QgsVectorFileWriter(
+                shapefile_path, 'UTF-8', fields,
+                QgsWkbTypes.Polygon, crs, driver_name
+            )
+            if writer.hasError() != QgsVectorFileWriter.NoError:
+                self.show_message(self.tr(f'Error creating file: {writer.errorMessage()}'))
+                return
+            del writer
+            layer = QgsVectorLayer(shapefile_path, os.path.basename(shapefile_path), 'ogr')
+        else:
+            layer = QgsVectorLayer(
+                f'Polygon?crs={crs.authid()}',
+                self.tr('Output Polygon'),
+                'memory'
+            )
+            pr = layer.dataProvider()
+            pr.addAttributes(fields)
+            layer.updateFields()
+        pr = layer.dataProvider()
+        feature = QgsFeature()
+        feature.setGeometry(QgsGeometry.fromPolygonXY([points]))
+        feature.setAttributes([1])
+        pr.addFeature(feature)
         layer.updateExtents()
         QgsProject.instance().addMapLayer(layer)
         if shapefile_path and shapefile_path != self.tr('Temporary Layer'):

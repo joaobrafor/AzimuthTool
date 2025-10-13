@@ -39,7 +39,6 @@
       <translation>Выберите точность расстояния (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>Импорт из линии/полигона</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>Обработать</translation>
+      <source>Process as Point</source>
+      <translation>Обработать как Точку</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>Обработать как Линию</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>Обработать как Полигон</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Вы можете включить привязку, если выберете ровно один векторный слой перед нажатием &apos;Выбрать на карте&apos;.</translation>
+      <translation>Вы можете включить привязку, если выберете ровно один векторный слой перед нажатием 'Выбрать на карте'.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>Расстояние</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>Начальная точка</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>Для создания полигона требуется не менее 2 сегментов.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>Подтвердить последнюю вершину</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>Вы хотите использовать последнюю вершину для замыкания полигона?</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>Выходные точки</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>Выходной полигон</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>Импорт из TXT</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>Экспорт в TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>Текстовые файлы (*.txt)</translation>
     </message>
   </context>
 </TS>

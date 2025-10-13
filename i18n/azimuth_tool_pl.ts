@@ -39,7 +39,6 @@
       <translation>Wybierz precyzję odległości (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>Importuj z linii/poligonu</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>Przetwórz</translation>
+      <source>Process as Point</source>
+      <translation>Przetwórz jako Punkt</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>Przetwórz jako Linię</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>Przetwórz jako Poligon</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Możesz włączyć przyciąganie, jeśli wybierzesz dokładnie jedną warstwę wektorową przed kliknięciem &apos;Wybierz na mapie&apos;.</translation>
+      <translation>Możesz włączyć przyciąganie, jeśli wybierzesz dokładnie jedną warstwę wektorową przed kliknięciem 'Wybierz na mapie'.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>Odległość</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>Punkt początkowy</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>Do utworzenia poligonu wymagane są co najmniej 2 segmenty.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>Potwierdź ostatni wierzchołek</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>Czy chcesz użyć ostatniego wierzchołka do zamknięcia poligonu?</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>Punkty wyjściowe</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>Poligon wyjściowy</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>Importuj z TXT</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>Eksportuj do TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>Pliki tekstowe (*.txt)</translation>
     </message>
   </context>
 </TS>

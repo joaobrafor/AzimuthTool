@@ -39,7 +39,6 @@
       <translation>Seleccione la precisión de la distancia (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>Importar desde Línea/Polígono</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>Procesar</translation>
+      <source>Process as Point</source>
+      <translation>Procesar como Punto</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>Procesar como Línea</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>Procesar como Polígono</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>Puede habilitar la captura si selecciona exactamente una capa vectorial antes de hacer clic en &apos;Seleccionar en el Mapa&apos;.</translation>
+      <translation>Puede habilitar la captura si selecciona exactamente una capa vectorial antes de hacer clic en 'Seleccionar en el Mapa'.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>Distancia</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>Punto Inicial</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>Se requieren al menos 2 segmentos para crear un polígono.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>Confirmar Último Vértice</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>¿Desea utilizar el último vértice para cerrar el polígono?</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>Puntos de Salida</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>Polígono de Salida</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>Importar desde TXT</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>Exportar a TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>Archivos de Texto (*.txt)</translation>
     </message>
   </context>
 </TS>

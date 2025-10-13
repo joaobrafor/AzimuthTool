@@ -39,7 +39,6 @@
       <translation>Select distance precision (0-10):</translation>
     </message>
   </context>
-
   <context>
     <name>AzimuthToolDialog</name>
     <message>
@@ -111,8 +110,16 @@
       <translation>Import from Line/Polygon</translation>
     </message>
     <message>
-      <source>Process</source>
-      <translation>Process</translation>
+      <source>Process as Point</source>
+      <translation>Process as Point</translation>
+    </message>
+    <message>
+      <source>Process as Line</source>
+      <translation>Process as Line</translation>
+    </message>
+    <message>
+      <source>Process as Polygon</source>
+      <translation>Process as Polygon</translation>
     </message>
     <message>
       <source>Temporary Layer</source>
@@ -132,7 +139,7 @@
     </message>
     <message>
       <source>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</source>
-      <translation>You can enable snapping if you select exactly one vector layer before clicking &apos;Select on Canvas&apos;.</translation>
+      <translation>You can enable snapping if you select exactly one vector layer before clicking 'Select on Canvas'.</translation>
     </message>
     <message>
       <source>Select only one vector layer for snapping.</source>
@@ -261,6 +268,42 @@
     <message>
       <source>Distance</source>
       <translation>Distance</translation>
+    </message>
+    <message>
+      <source>Initial Point</source>
+      <translation>Initial Point</translation>
+    </message>
+    <message>
+      <source>At least 2 segments are required to create a polygon.</source>
+      <translation>At least 2 segments are required to create a polygon.</translation>
+    </message>
+    <message>
+      <source>Confirm Last Vertex</source>
+      <translation>Confirm Last Vertex</translation>
+    </message>
+    <message>
+      <source>Do you want to use the last vertex to close the polygon?</source>
+      <translation>Do you want to use the last vertex to close the polygon?</translation>
+    </message>
+    <message>
+      <source>Output Points</source>
+      <translation>Output Points</translation>
+    </message>
+    <message>
+      <source>Output Polygon</source>
+      <translation>Output Polygon</translation>
+    </message>
+    <message>
+      <source>Import from TXT</source>
+      <translation>Import from TXT</translation>
+    </message>
+    <message>
+      <source>Export to TXT</source>
+      <translation>Export to TXT</translation>
+    </message>
+    <message>
+      <source>Text Files (*.txt)</source>
+      <translation>Text Files (*.txt)</translation>
     </message>
   </context>
 </TS>
